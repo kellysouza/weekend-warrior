@@ -18,12 +18,10 @@ describe Alouette do
     end
 
     it "generates the correct line for the first verse" do
-      skip
       Alouette.lines_for_verse(0).must_equal ['Et la tête!']
     end
 
     it "generates the correct lines for the third verse" do
-      skip
       expected_lines = [
         "Et les yeux!",
         "Et le bec!",
