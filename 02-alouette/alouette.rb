@@ -3,9 +3,9 @@
 class Alouette
   attr_reader
 
-# def initialize
-#   @lines_for_verse = []
-# end
+  # def initialize
+  #   @lines_for_verse = []
+  # end
   #  lines_for_verse will do the work of
   #   generating all those `Et <part>!` lines for a given verse.
   #   It should return an array of strings, without repeats.
@@ -21,13 +21,6 @@ class Alouette
   #   line = []
   #   line << lines[verse]
   #
-  #   @lines_for_verse = []
-  #     i = verse
-  #     until i < 0
-  #       @lines_for_verse << lines[i]
-  #       i -= 1
-  #     end
-  #     return @lines_for_verse
   # end
 
   def self.lines_for_verse(verse_number)
@@ -70,44 +63,27 @@ class Alouette
   # ```
 
   def self.verse(number)
-
-    # "Je te plumerai la tête."
-    # Je te plumerai la tête.
-    # Et la tête!
-    # Et la tête!
-    # Alouette!
-    # Alouette!
-    # A-a-a-ah
-    verse = ["Je te plumerai la tête.", "Je te plumerai la tête."]
-    i = number
-    while i >= 0
-      verse << lines_for_verse(i)
-      i -= 1
-    end
-    verse << ["Alouette!", "Alouette!", "A-a-a-ah"]
-    verse_string = verse.join("\n")
-
-    # .each do |line|
-    # i = number
-    # while i >= 0
-    # puts line[i]
-    # puts line[i]
-    # i -= 1
-    # end
-    puts verse_string
+    bits = lines_for_verse(number)[0].sub(/\s*[\w']+\s+/, "").chop
+    start = ["Je te plumerai #{bits}.", "Je te plumerai #{bits}."]
+    middle = lines_for_verse(number)
+    ending = ["Alouette!", "Alouette!", "A-a-a-ah"] #<< "\n"
+    middle = middle.zip(middle).flatten.compact
+    verses = [start, middle, ending].join("\n")
+    return verses
   end
 
+  def self.sing
 
-  ### `sing`
-  # `Alouette#sing` will build the entire song,
-  # formatted as in [`alouette_lyrics.txt`](alouette_lyrics.txt).
-  # There should be a blank line between verses and refrains.
-  # The value returned should return a string.
-
-
-  def sing
-    refrain = "Alouette, gentille alouette,\nAlouette, je te plumerai."
-
+    i = 0
+    song = []
+    until i > 7
+      song << "Alouette, gentille alouette,\nAlouette, je te plumerai.\n\n"
+      song << verse(i)
+      song << "\n\n"
+      i +=1
+    end
+    song << "Alouette, gentille alouette,\nAlouette, je te plumerai."
+    return song.join
   end
 
 end
